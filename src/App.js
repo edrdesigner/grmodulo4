@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
 import GlobalStyle from './styles/global';
+import Sidebar from './components/Sidebar';
 
 const App = () => (
   <Fragment>
     <GlobalStyle />
-    <h1>Oi</h1>
+    <Sidebar />
   </Fragment>
 );
 
