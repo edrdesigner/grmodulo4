@@ -48,3 +48,5 @@ export const Playlist = styled(Link)`
     opacity: 0.7;
   }
 `;
+
+export const SongList = styled.div``;
