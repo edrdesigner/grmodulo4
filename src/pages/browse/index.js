@@ -1,50 +1,70 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Creators as PlaylistsActions } from '../../store/ducks/playlists';
+
+import Loading from '../../components/Loading';
+
 import {
   Container, Title, List, Playlist,
 } from './styles';
 
-const Browse = () => (
-  <Container>
-    <Title>Navegar</Title>
+class Browse extends Component {
+  static propTypes = {
+    getPlaylistRequest: PropTypes.func.isRequired,
+    playlists: PropTypes.shape({
+      data: PropTypes.arrayOf(
+        PropTypes.shape({
+          id: PropTypes.number,
+          title: PropTypes.string,
+          thumbnail: PropTypes.string,
+          description: PropTypes.string,
+        }),
+      ),
+      loading: PropTypes.bool,
+    }).isRequired,
+  };
 
-    <List>
-      <Playlist to="/playlists/1">
-        <img
-          src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/448319b4b1b43f8324abc31cee74b401_screen.jpg?ts=1476426364"
-          alt="playlist"
-        />
-        <strong>Rock dos bons</strong>
-        <p>Relache enquanto você programa</p>
-      </Playlist>
+  componentDidMount() {
+    const { getPlaylistRequest } = this.props;
 
-      <Playlist to="/playlists/1">
-        <img
-          src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/448319b4b1b43f8324abc31cee74b401_screen.jpg?ts=1476426364"
-          alt="playlist"
-        />
-        <strong>Rock dos bons</strong>
-        <p>Relache enquanto você programa</p>
-      </Playlist>
+    if (getPlaylistRequest) {
+      getPlaylistRequest();
+    }
+  }
 
-      <Playlist to="/playlists/1">
-        <img
-          src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/448319b4b1b43f8324abc31cee74b401_screen.jpg?ts=1476426364"
-          alt="playlist"
-        />
-        <strong>Rock dos bons</strong>
-        <p>Relache enquanto você programa</p>
-      </Playlist>
+  render() {
+    const { playlists } = this.props;
+    return (
+      <Container>
+        <Title>
+          Navegar
+          {playlists.loading && <Loading />}
+        </Title>
 
-      <Playlist to="/playlists/1">
-        <img
-          src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/448319b4b1b43f8324abc31cee74b401_screen.jpg?ts=1476426364"
-          alt="playlist"
-        />
-        <strong>Rock dos bons</strong>
-        <p>Relache enquanto você programa</p>
-      </Playlist>
-    </List>
-  </Container>
-);
+        <List>
+          {playlists.data.map(playlist => (
+            <Playlist key={playlist.id} to={`/playlists/${playlist.id}`}>
+              <img src={playlist.thumbnail} alt={playlist.title} />
+              <strong>{playlist.title}</strong>
+              <p>{playlist.description}</p>
+            </Playlist>
+          ))}
+        </List>
+      </Container>
+    );
+  }
+}
 
-export default Browse;
+const mapStateToProps = state => ({
+  playlists: state.playlists,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(PlaylistsActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Browse);
