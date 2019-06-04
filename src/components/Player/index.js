@@ -1,5 +1,6 @@
 import React from 'react';
 import Slider from 'rc-slider';
+import Sound from 'react-sound';
 
 import {
   Container, Current, Volume, Progress, Controls, Time, ProgressSlider,
@@ -15,6 +16,9 @@ import RepeatIcon from '../../assets/images/repeat.svg';
 
 const Player = () => (
   <Container>
+    {/* <Sound
+      url=""
+    /> */}
     <Current>
       <img
         src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/448319b4b1b43f8324abc31cee74b401_screen.jpg?ts=1476426364"

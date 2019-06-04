@@ -43,7 +43,9 @@ class Playlist extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.match.params.id !== this.props.match.params.id) {
+    const { match } = this.props;
+    const { match: prevMatch } = prevProps;
+    if (prevMatch.params.id !== match.params.id) {
       this.loadPlaylistDetails();
     }
   }
@@ -55,7 +57,9 @@ class Playlist extends Component {
   };
 
   renderDetails = () => {
-    const playlist = this.props.playlistDetails.data;
+    const {
+      playlistDetails: { data: playlist },
+    } = this.props;
     return (
       <Container>
         <Header>
