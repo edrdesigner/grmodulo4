@@ -10,7 +10,7 @@ Bootscamp GoStack [RocketSeat](https://rocketseat.com.br/)
 
 In the project directory, you can run:
 
-### `yarn start`
+`yarn run start`
 
 Runs the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
